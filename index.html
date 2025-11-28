@@ -1,0 +1,375 @@
+<!doctype doctype>
+<html lang="pt-BR">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Descrições para E-commerce</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100%;
+            width: 100%;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            align-items: center;
+        }
+        
+        .logo{
+            margin:auto; //aplica margem aos quatro lados
+            width:100px;
+                }
+        .header h1 {
+            margin: 0 0 8px 0;
+            color: #1a202c;
+            font-size: 32px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            margin: 0;
+            color: #718096;
+            font-size: 16px;
+        }
+        
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        
+        .form-section, .preview-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a202c;
+            margin: 0 0 24px 0;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .preview-content {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 24px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            color: #2d3748;
+            white-space: pre-wrap;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .btn-copy {
+            width: 100%;
+            padding: 12px 24px;
+            background: #48bb78;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-copy:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+        }
+        
+        .copied-message {
+            display: none;
+            background: #48bb78;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 12px;
+            font-weight: 600;
+        }
+        
+        .copied-message.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 968px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .container {
+                padding: 16px;
+            }
+            
+            .form-section, .preview-section {
+                padding: 20px;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container">
+       <div class="header">
+        <img src="https://novachevroletgm.com.br/wp-content/uploads/2025/01/cropped-cropped-logo-Nova-Cinza-sem-gravata-e1737717753323.png" alt="Logo Nova Chevrolet" class="logo" />
+    <h1 id="mainTitle">Gerador de Descrições para E-commerce Nova Chevrolet</h1>
+    <p id="mainSubtitle">Preencha os campos abaixo e gere descrições profissionais automaticamente</p>
+   </div>
+   <div class="content-wrapper">
+    <div class="form-section">
+     <h2 class="section-title">Informações do Produto</h2>
+     <form id="productForm">
+      <div class="form-group"><label for="marca">Marca</label> <input type="text" id="marca" placeholder="Ex: Cofap" required>
+      </div>
+      <div class="form-group"><label for="modelo">Modelo do Produto</label> <input type="text" id="modelo" placeholder="Ex: Amortecedor Dianteiro">
+      </div>
+      <div class="form-group"><label for="codigo">Código de Referência</label> <input type="text" id="codigo" placeholder="Ex: ABC123" required>
+      </div>
+      <div class="form-group"><label for="similares">Códigos Similares</label> <input type="text" id="similares" placeholder="Ex: XYZ789, DEF456">
+      </div>
+      <div class="form-group"><label for="garantia">Tempo de Garantia</label> <input type="text" id="garantia" placeholder="Ex: 90 dias" value="90 dias">
+      </div>
+      <div class="form-group"><label for="veiculos">Aplicação do Produto (Veículos)</label> <textarea id="veiculos" placeholder="Ex: Chevrolet Onix 2016-2022
+Chevrolet Prisma 2013-2019" required></textarea>
+      </div>
+      <div class="form-group"><label for="conteudo">Conteúdo da Embalagem</label> <input type="text" id="conteudo" placeholder="Ex: 1 unidade" required>
+      </div>
+      <div class="form-group"><label for="observacoes">Observações Adicionais</label> <textarea id="observacoes" placeholder="Informações extras sobre o produto (opcional)"></textarea>
+      </div><button type="submit" class="btn-primary">Gerar Descrição</button>
+     </form>
+    </div>
+    <div class="preview-section">
+     <h2 class="section-title">Prévia da Descrição</h2>
+     <div id="preview" class="preview-content">
+      Preencha o formulário e clique em "Gerar Descrição" para visualizar o resultado aqui.
+     </div><button id="copyBtn" class="btn-copy" style="display: none;">Copiar Descrição</button>
+     <div id="copiedMessage" class="copied-message">
+      Descrição copiada com sucesso!
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+        const defaultConfig = {
+            store_title: 'LOJA OFICIAL NOVA CHEVROLET GM',
+            store_slogan: 'NOVA CHEVROLET, QUALIDADE E CONFIANCA AO SEU ALCANCE!'
+        };
+
+        let config = { ...defaultConfig };
+
+        async function onConfigChange(newConfig) {
+            config = { ...newConfig };
+            document.getElementById('mainTitle').textContent = 'Gerador de Descrições para E-commerce';
+            document.getElementById('mainSubtitle').textContent = 'Preencha os campos abaixo e gere descriç��es profissionais automaticamente';
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ['store_title', config.store_title || defaultConfig.store_title],
+                ['store_slogan', config.store_slogan || defaultConfig.store_slogan]
+            ]);
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const marca = document.getElementById('marca').value;
+            const modelo = document.getElementById('modelo').value;
+            const codigo = document.getElementById('codigo').value;
+            const similares = document.getElementById('similares').value;
+            const garantia = document.getElementById('garantia').value;
+            const veiculos = document.getElementById('veiculos').value;
+            const conteudo = document.getElementById('conteudo').value;
+            const observacoes = document.getElementById('observacoes').value;
+            
+            const storeTitle = config.store_title || defaultConfig.store_title;
+            const storeSlogan = config.store_slogan || defaultConfig.store_slogan;
+            
+            let descricao = `${storeTitle}
+${storeSlogan}
+	
+Especificacao Tecnica:
+Garantia: ${garantia}
+Marca: ${marca}`;
+
+            if (modelo) {
+                descricao += `\nModelo: ${modelo}`;
+            }
+
+            descricao += `\nCodigo de referencia: ${codigo}`;
+
+            if (similares) {
+                descricao += `\nCodigos Similares: ${similares}`;
+            }
+
+            descricao += `\nValor: Unitario
+Produto Novo
+
+Aplicacao do produto:
+${veiculos}
+
+Conteudo da Embalagem:
+${conteudo}`;
+
+            if (observacoes) {
+                descricao += `\n\nObservacoes do Produto:
+${observacoes}`;
+            }
+
+            descricao += `\n\nImportante:
+A Garantia da Nova Chevrolet nao cobre ma instalacao ou mau uso do produto, recomendamos que a instalacao seja feita por um profissional especializado.
+Compre no CPF, pois no CNPJ tera o custo de ICMS por conta do comprador. 
+
+OBSERVACOES E CONDICOES DA LOJA
+Antes de comprar tire suas duvidas nas perguntas.
+Todos os nossos produtos sao novos com garantia.
+Todas vendas acompanham nota fiscal Eletronica.
+Aplicacoes tecnicas confirme com seu mecanico.
+Nao Entregamos em Caixa Postal do Correios.
+Compre no CPF, pois no CNPJ tera o custo de ICMS pago pelo cliente.
+Mantenha seus dados pessoais atualizados no site.
+Recebera o produto Garantido ou Dinheiro de Volta.
+Economize, adicione varios produtos no Carrinho.
+Todos Produtos Anunciados temos pronta entrega.
+O Vendedor nao tem autonomia sobre entregas.
+Compra Errada nao tem troca, apenas a devolucao`;
+            
+            document.getElementById('preview').textContent = descricao;
+            document.getElementById('copyBtn').style.display = 'block';
+        });
+        
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const previewText = document.getElementById('preview').textContent;
+            
+            navigator.clipboard.writeText(previewText).then(function() {
+                const message = document.getElementById('copiedMessage');
+                message.classList.add('show');
+                
+                setTimeout(function() {
+                    message.classList.remove('show');
+                }, 3000);
+            });
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a59d659f43a861f',t:'MTc2NDMzMjYxNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
