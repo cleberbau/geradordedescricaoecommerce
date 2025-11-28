@@ -67,6 +67,43 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .tab-button {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 15px;
+            font-weight: 600;
+            color: #718096;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: -2px;
+        }
+        
+        .tab-button:hover {
+            color: #667eea;
+        }
+        
+        .tab-button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
         .section-title {
             font-size: 24px;
             font-weight: 700;
@@ -223,27 +260,50 @@
    <div class="content-wrapper">
     <div class="form-section">
      <h2 class="section-title">Informações do Produto</h2>
-     <form id="productForm">
-      <div class="form-group"><label for="marca">Marca</label> <input type="text" id="marca" placeholder="Ex: Cofap" required>
-      </div>
-      <div class="form-group"><label for="modelo">Modelo do Produto</label> <input type="text" id="modelo" placeholder="Ex: Amortecedor Dianteiro">
-      </div>
-      <div class="form-group"><label for="codigo">Código de Referência</label> <input type="text" id="codigo" placeholder="Ex: ABC123" required>
-      </div>
-      <div class="form-group"><label for="similares">Códigos Similares</label> <input type="text" id="similares" placeholder="Ex: XYZ789, DEF456">
-      </div>
-      <div class="form-group"><label for="garantia">Tempo de Garantia</label> <input type="text" id="garantia" placeholder="Ex: 90 dias" value="90 dias">
-      </div>
-      <div class="form-group"><label for="veiculos">Aplicação do Produto (Veículos)</label> <textarea id="veiculos" placeholder="Ex: Chevrolet Onix 2016-2022
+     <div class="tabs"><button type="button" class="tab-button active" data-tab="manual">Preencher Manual</button> <button type="button" class="tab-button" data-tab="padrao">Deixar Padrão</button>
+     </div>
+     <div id="tab-manual" class="tab-content active">
+      <form id="productForm">
+       <div class="form-group"><label for="marca">Marca</label> <input type="text" id="marca" placeholder="Ex: Cofap" required>
+       </div>
+       <div class="form-group"><label for="modelo">Modelo do Produto</label> <input type="text" id="modelo" placeholder="Ex: Amortecedor Dianteiro">
+       </div>
+       <div class="form-group"><label for="codigo">Código de Referência</label> <input type="text" id="codigo" placeholder="Ex: ABC123" required>
+       </div>
+       <div class="form-group"><label for="similares">Códigos Similares</label> <input type="text" id="similares" placeholder="Ex: XYZ789, DEF456">
+       </div>
+       <div class="form-group"><label for="garantia">Tempo de Garantia</label> <input type="text" id="garantia" placeholder="Ex: 90 dias" value="90 dias">
+       </div>
+       <div class="form-group"><label for="veiculos">Aplicação do Produto (Veículos)</label> <textarea id="veiculos" placeholder="Ex: Chevrolet Onix 2016-2022
 Chevrolet Prisma 2013-2019" required></textarea>
+       </div>
+       <div class="form-group"><label for="conteudo">Conteúdo da Embalagem</label> <input type="text" id="conteudo" placeholder="Ex: 1 unidade" required>
+       </div>
+       <div class="form-group"><label for="valor">Tipo de Valor</label> <select id="valor"> <option value="Unitario">Unitário</option> <option value="Kit">Kit</option> <option value="Par">Par</option> <option value="Jogo">Jogo</option> </select>
+       </div>
+       <div class="form-group"><label for="observacoes">Observações Adicionais</label> <textarea id="observacoes" placeholder="Informações extras sobre o produto (opcional)"></textarea>
+       </div><button type="submit" class="btn-primary">Gerar Descrição</button>
+      </form>
+     </div>
+     <div id="tab-padrao" class="tab-content">
+      <div style="text-align: center; padding: 40px 20px;">
+       <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 32px; margin-bottom: 24px;">
+        <svg style="width: 64px; height: 64px; margin: 0 auto 20px; display: block;" fill="none" stroke="#667eea" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+        </svg>
+        <h3 style="color: #1a202c; font-size: 22px; margin: 0 0 16px 0; font-weight: 700;">Padronização Automática com IA</h3>
+        <p style="color: #718096; font-size: 15px; line-height: 1.6; margin: 0 0 24px 0;">Para reorganizar descrições desorganizadas seguindo a estrutura padrão do modelo, use nossa ferramenta especializada com inteligência artificial.</p><a href="https://chatgpt.com/share/6929a84d-31a0-8004-87f4-626acc0c16c0" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 14px 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3); transition: all 0.3s ease;"> Acessar Ferramenta de Padronização </a>
+       </div>
+       <div style="background: #edf2f7; border-left: 4px solid #667eea; padding: 20px; border-radius: 8px; text-align: left;">
+        <h4 style="color: #2d3748; font-size: 16px; margin: 0 0 12px 0; font-weight: 600;">Como funciona:</h4>
+        <ol style="color: #4a5568; font-size: 14px; line-height: 1.8; margin: 0; padding-left: 20px;">
+         <li>Clique no botão acima para abrir a ferramenta</li>
+         <li>Cole sua descrição desorganizada</li>
+         <li>A IA reorganiza automaticamente na estrutura padrão</li>
+         <li>Copie o resultado e use em seus produtos</li>
+        </ol>
+       </div>
       </div>
-      <div class="form-group"><label for="conteudo">Conteúdo da Embalagem</label> <input type="text" id="conteudo" placeholder="Ex: 1 unidade" required>
-      </div>
-      <div class="form-group"><label for="valor">Tipo de Valor</label> <select id="valor"> <option value="Unitario">Unitário</option> <option value="Kit">Kit</option> <option value="Par">Par</option> <option value="Jogo">Jogo</option> </select>
-      </div>
-      <div class="form-group"><label for="observacoes">Observações Adicionais</label> <textarea id="observacoes" placeholder="Informações extras sobre o produto (opcional)"></textarea>
-      </div><button type="submit" class="btn-primary">Gerar Descrição</button>
-     </form>
+     </div>
     </div>
     <div class="preview-section">
      <h2 class="section-title">Prévia da Descrição</h2>
@@ -376,6 +436,26 @@ Compra Errada nao tem troca, apenas a devolucao`;
                 }, 3000);
             });
         });
+        
+        // Sistema de abas
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const tabName = this.getAttribute('data-tab');
+                
+                // Remove active de todos os botões e conteúdos
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Adiciona active ao botão clicado e seu conteúdo
+                this.classList.add('active');
+                document.getElementById('tab-' + tabName).classList.add('active');
+            });
+        });
+        
+
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a5a30dbe630dc8f',t:'MTc2NDMzNjMyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a5a55b8721b861f',t:'MTc2NDMzNzgzMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
